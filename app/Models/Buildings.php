@@ -14,4 +14,16 @@ class Buildings extends Model
     {
         return $this->hasMany(Units::class, 'building_id');
     }
+
+    public function expenses()
+    {
+        return $this->hasManyThrough(
+            Expenses::class, // The model we want to access (Expense)
+            Units::class,    // The intermediate model (Unit)
+            'building_id',  // Foreign key on the Unit model
+            'unit_id',      // Foreign key on the Expense model
+            'id',           // Local key on the Building model
+            'id'            // Local key on the Unit model
+        );
+    }
 }

@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Parfaitementweb\FilamentCountryField\Forms\Components\Country;
 
 class BuildingResource extends Resource
 {
@@ -40,9 +41,7 @@ class BuildingResource extends Resource
                 Forms\Components\TextInput::make('state')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('country')
-                    ->required()
-                    ->maxLength(255),
+                Country::make('country')->required(),
             ]);
     }
 
@@ -95,6 +94,7 @@ class BuildingResource extends Resource
     {
         return [
             RelationManagers\UnitsRelationManager::class,
+            RelationManagers\ExpensesRelationManager::class,
         ];
     }
 

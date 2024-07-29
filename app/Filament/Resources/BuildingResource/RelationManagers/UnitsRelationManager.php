@@ -40,11 +40,11 @@ class UnitsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('Units')
             ->columns([
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('unitType.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('area')
                     ->numeric()
                     ->sortable(),
