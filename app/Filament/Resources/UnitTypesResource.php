@@ -18,6 +18,8 @@ class UnitTypesResource extends Resource
     protected static ?string $model = UnitTypes::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 8;
+    protected static ?string $navigationGroup = 'Settings';
 
     public static function form(Form $form): Form
     {

@@ -19,6 +19,7 @@ class BuildingResource extends Resource
     protected static ?string $model = Buildings::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -93,7 +94,7 @@ class BuildingResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\UnitsRelationManager::class,
         ];
     }
 
