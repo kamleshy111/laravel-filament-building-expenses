@@ -15,4 +15,9 @@ class ExpenseTypes extends Model
     {
         return $this->hasMany(Expenses::class);
     }
+
+    public function vendors()
+    {
+        return $this->hasMany(Vendors::class);
+    }
 }

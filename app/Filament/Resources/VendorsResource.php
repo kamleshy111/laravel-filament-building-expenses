@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
 class VendorsResource extends Resource
 {
@@ -27,6 +28,8 @@ class VendorsResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Select::make('expenses_type')
+                    ->relationship('expenseType', 'name'),
                 Forms\Components\TextInput::make('contact')
                     ->required()
                     ->maxLength(255),
@@ -47,6 +50,9 @@ class VendorsResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('expenseType.name')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('contact')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')

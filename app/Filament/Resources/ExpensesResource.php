@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Vendors;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,9 +29,22 @@ class ExpensesResource extends Resource
                 Select::make('unit_id')
                     ->relationship('unit', 'name'),
                 Select::make('expense_type_id')
-                    ->relationship('expenseType', 'name'),
+                        ->relationship('expenseType', 'name')
+                        ->label('Expense Type')
+                        ->reactive()
+                        ->afterStateUpdated(fn (callable $set) => $set('vendor_id', null)),
                 Select::make('vendor_id')
-                    ->relationship('vendor', 'name'),
+                        ->label('Vendor')
+                        ->options(function (callable $get) {
+                            $expenseTypeId = $get('expense_type_id');
+
+                            if (!$expenseTypeId) {
+                                return Vendors::all()->pluck('name', 'id');
+                            }
+
+                            return Vendors::where('expenses_type', $expenseTypeId)->pluck('name', 'id');
+                        })
+                        ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->required(),
                 Forms\Components\TextInput::make('amount')

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\BuildingResource\RelationManagers;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Hidden;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,20 +18,7 @@ class ExpensesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Select::make('unit_id')
-                    ->options(function () {
-                        // Get the current building record from the RelationManager context
-                        $building = $this->getOwnerRecord();
-
-                        if (!$building) {
-                            return [];
-                        }
-
-                        return \App\Models\Units::where('building_id', $building->id)
-                            ->pluck('name', 'id')
-                            ->toArray();
-                    })
-                    ->required(),
+                Hidden::make('unit_id')->default( $this->getOwnerRecord()),
                 Select::make('expense_type_id')
                     ->relationship('expenseType', 'name'),
                 Select::make('vendor_id')
