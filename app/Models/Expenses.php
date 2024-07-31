@@ -13,7 +13,7 @@ class Expenses extends Model
 
     public function unit()
     {
-        return $this->belongsTo(units::class);
+        return $this->belongsTo(Units::class);
     }
 
     public function expenseType()
