@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('expense_type_id');
             $table->unsignedBigInteger('vendor_id');
             $table->date('date');
-            $table->decimal('amount');
+            $table->decimal('amount' ,14 , 2);
             $table->text('description');
             $table->timestamps();
 
