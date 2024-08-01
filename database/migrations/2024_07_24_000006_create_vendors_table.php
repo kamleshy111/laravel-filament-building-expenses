@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('vendors', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('expenses_type')->defolut(0);
             $table->string('name');
             $table->string('contact');
             $table->string('phone');

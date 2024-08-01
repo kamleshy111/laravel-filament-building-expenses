@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id');
+            $table->unsignedBigInteger('building_id')->defolut(0);
             $table->unsignedBigInteger('expense_type_id');
             $table->unsignedBigInteger('vendor_id');
             $table->date('date');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description');
             $table->timestamps();
 
-            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
+            $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');
             $table->foreign('expense_type_id')->references('id')->on('expense_types')->onDelete('cascade');
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');
 
