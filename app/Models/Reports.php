@@ -9,11 +9,11 @@ class Reports extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'generation_date', 'unit_id', 'total_expenses'];
+    protected $fillable = ['name', 'description', 'generation_date', 'building_id', 'total_expenses'];
 
 
-    public function unit()
+    public function building()
     {
-        return $this->belongsTo(Units::class);
+        return $this->belongsTo(Buildings::class);
     }
 }

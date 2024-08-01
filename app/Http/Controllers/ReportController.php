@@ -12,15 +12,13 @@ class ReportController extends Controller
 {
     public function __invoke(Buildings $buildings)
     {
-        foreach ($buildings->units as $unit) {
-            Reports::create([
-                'name' => $buildings->name . ' ' . $unit->name . ' report',
-                'description' => $buildings->name . ' ' . $unit->name . ' report',
-                'generation_date' => date('Y-m-d'),
-                'unit_id' => $unit->id,
-                'total_expenses' => $unit->expenses->sum('amount'),
-            ]);
-        }
+        Reports::create([
+            'name' => $buildings->name . ' report',
+            'description' => $buildings->name . ' report',
+            'generation_date' => date('Y-m-d'),
+            'unit_id' => $buildings->id,
+            'total_expenses' => $buildings->expenses->sum('amount'),
+        ]);
 
         $previousUrl = URL::previous();
         return redirect($previousUrl)->with('success', 'PDF generated successfully!');

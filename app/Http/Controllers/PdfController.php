@@ -13,19 +13,24 @@ class PdfController extends Controller
     public function __invoke(Reports $report)
     {
 
-        $unit = $report->unit;
+        $building = isset($report->building) ? $report->building : [];
+        $units = isset($building->units) ? $building->units : [];
+        $totalArea = $perSqFitExpenses =0;
+        if (!empty($building->units)) {
+            $totalArea = $building->units->sum('area');
+            $perSqFitExpenses = ($report->total_expenses/ $totalArea);
+        }
 
-        $expenses = isset($unit->expenses) ? $unit->expenses : [];
-        $building = isset($unit->building) ? $unit->building : [];
-        $unitType = isset($unit->unitType) ? $unit->unitType : [];
+        $expenses = isset($building->expenses) ? $building->expenses : [];
 
         return Pdf::loadView('pdf',
             [
                 'record' => $report,
-                'unit' => $unit,
                 'expenses' => $expenses,
                 'building' => $building,
-                'unitType' => $unitType
+                'units' => $units,
+                'totalArea' => $totalArea,
+                'perSqFitExpenses' => $perSqFitExpenses
             ]
         )->setPaper('a4', 'portrait')->download($report->id. 'report.pdf');
     }

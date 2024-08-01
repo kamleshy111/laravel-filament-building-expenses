@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->date('generation_date');
-            $table->unsignedBigInteger('unit_id');
+            $table->unsignedBigInteger('building_id');
             $table->decimal('total_expenses');
             $table->timestamps();
 
-            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
+            $table->foreign('building_id')->references('id')->on('buildings')->onDelete('cascade');
 
         });
     }

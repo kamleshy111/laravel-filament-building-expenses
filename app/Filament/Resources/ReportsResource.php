@@ -46,7 +46,7 @@ class ReportsResource extends Resource
                 Tables\Columns\TextColumn::make('generation_date')
                     ->date('m-d-Y')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('unit.name')
+                Tables\Columns\TextColumn::make('building.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_expenses')
                     ->searchable(),
@@ -63,7 +63,6 @@ class ReportsResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 /*Tables\Actions\Action::make('pdf')
                     ->label('PDF')
