@@ -20,9 +20,11 @@ class UnitsRelationManager extends RelationManager
         return $form
             ->schema([
                 Select::make('building_id')
-                    ->relationship('building', 'name'),
+                    ->relationship('building', 'name')
+                    ->required(),
                 Select::make('unit_type_id')
-                    ->relationship('unitType', 'name'),
+                    ->relationship('unitType', 'name')
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),

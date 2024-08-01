@@ -26,13 +26,15 @@ class ExpensesResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('unit_id')
-                    ->relationship('unit', 'name'),
+                Select::make('building_id')
+                    ->relationship('building', 'name')
+                    ->required(),
                 Select::make('expense_type_id')
                         ->relationship('expenseType', 'name')
                         ->label('Expense Type')
                         ->reactive()
-                        ->afterStateUpdated(fn (callable $set) => $set('vendor_id', null)),
+                        ->afterStateUpdated(fn (callable $set) => $set('vendor_id', null))
+                        ->required(),
                 Select::make('vendor_id')
                         ->label('Vendor')
                         ->options(function (callable $get) {
@@ -60,7 +62,7 @@ class ExpensesResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('unit.name')
+                Tables\Columns\TextColumn::make('building.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('expenseType.name')

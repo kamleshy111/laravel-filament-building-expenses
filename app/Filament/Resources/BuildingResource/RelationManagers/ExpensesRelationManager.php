@@ -9,6 +9,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use App\Models\Vendors;
 
 class ExpensesRelationManager extends RelationManager
 {
@@ -18,11 +19,29 @@ class ExpensesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Hidden::make('unit_id')->default( $this->getOwnerRecord()),
+                Hidden::make('building_id')->default( $this->getOwnerRecord()),
+                // Select::make('expense_type_id')
+                //     ->relationship('expenseType', 'name'),
+                // Select::make('vendor_id')
+                //     ->relationship('vendor', 'name'),
                 Select::make('expense_type_id')
-                    ->relationship('expenseType', 'name'),
+                    ->relationship('expenseType', 'name')
+                    ->label('Expense Type')
+                    ->reactive()
+                    ->afterStateUpdated(fn (callable $set) => $set('vendor_id', null))
+                    ->required(),
                 Select::make('vendor_id')
-                    ->relationship('vendor', 'name'),
+                    ->label('Vendor')
+                    ->options(function (callable $get) {
+                        $expenseTypeId = $get('expense_type_id');
+
+                        if (!$expenseTypeId) {
+                            return Vendors::all()->pluck('name', 'id');
+                        }
+
+                        return Vendors::where('expenses_type', $expenseTypeId)->pluck('name', 'id');
+                    })
+                    ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->required(),
                 Forms\Components\TextInput::make('amount')
@@ -39,7 +58,7 @@ class ExpensesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('Expenses list')
             ->columns([
-                Tables\Columns\TextColumn::make('unit.name')
+                Tables\Columns\TextColumn::make('building.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('expenseType.name')
