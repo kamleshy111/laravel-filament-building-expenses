@@ -16,7 +16,7 @@ class ReportController extends Controller
             'name' => $buildings->name . ' report',
             'description' => $buildings->name . ' report',
             'generation_date' => date('Y-m-d'),
-            'unit_id' => $buildings->id,
+            'building_id' => $buildings->id,
             'total_expenses' => $buildings->expenses->sum('amount'),
         ]);
 
