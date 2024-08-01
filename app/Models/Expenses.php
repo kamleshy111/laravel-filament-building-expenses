@@ -9,7 +9,7 @@ class Expenses extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['unit_id', 'expense_type_id', 'vendor_id', 'date', 'amount', 'description'];
+    protected $fillable = ['building_id','unit_id', 'expense_type_id', 'vendor_id', 'date', 'amount', 'description'];
 
     public function unit()
     {
@@ -25,4 +25,10 @@ class Expenses extends Model
     {
         return $this->belongsTo(Vendors::class);
     }
+
+    public function building()
+    {
+        return $this->belongsTo(Buildings::class);
+    }
+
 }

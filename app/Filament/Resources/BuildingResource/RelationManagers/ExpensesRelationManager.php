@@ -5,9 +5,11 @@ namespace App\Filament\Resources\BuildingResource\RelationManagers;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Hidden;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use App\Models\Vendors;
 
 class ExpensesRelationManager extends RelationManager
 {
@@ -17,24 +19,29 @@ class ExpensesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Select::make('unit_id')
-                    ->options(function () {
-                        // Get the current building record from the RelationManager context
-                        $building = $this->getOwnerRecord();
+                Hidden::make('building_id')->default( $this->getOwnerRecord()),
+                // Select::make('expense_type_id')
+                //     ->relationship('expenseType', 'name'),
+                // Select::make('vendor_id')
+                //     ->relationship('vendor', 'name'),
+                Select::make('expense_type_id')
+                    ->relationship('expenseType', 'name')
+                    ->label('Expense Type')
+                    ->reactive()
+                    ->afterStateUpdated(fn (callable $set) => $set('vendor_id', null))
+                    ->required(),
+                Select::make('vendor_id')
+                    ->label('Vendor')
+                    ->options(function (callable $get) {
+                        $expenseTypeId = $get('expense_type_id');
 
-                        if (!$building) {
-                            return [];
+                        if (!$expenseTypeId) {
+                            return Vendors::all()->pluck('name', 'id');
                         }
 
-                        return \App\Models\Units::where('building_id', $building->id)
-                            ->pluck('name', 'id')
-                            ->toArray();
+                        return Vendors::where('expenses_type', $expenseTypeId)->pluck('name', 'id');
                     })
                     ->required(),
-                Select::make('expense_type_id')
-                    ->relationship('expenseType', 'name'),
-                Select::make('vendor_id')
-                    ->relationship('vendor', 'name'),
                 Forms\Components\DatePicker::make('date')
                     ->required(),
                 Forms\Components\TextInput::make('amount')
@@ -51,7 +58,7 @@ class ExpensesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('Expenses list')
             ->columns([
-                Tables\Columns\TextColumn::make('unit.name')
+                Tables\Columns\TextColumn::make('building.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('expenseType.name')

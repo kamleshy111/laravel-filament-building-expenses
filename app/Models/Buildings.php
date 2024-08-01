@@ -17,13 +17,18 @@ class Buildings extends Model
 
     public function expenses()
     {
-        return $this->hasManyThrough(
-            Expenses::class, // The model we want to access (Expense)
-            Units::class,    // The intermediate model (Unit)
-            'building_id',  // Foreign key on the Unit model
-            'unit_id',      // Foreign key on the Expense model
-            'id',           // Local key on the Building model
-            'id'            // Local key on the Unit model
-        );
+        return $this->hasMany(Expenses::class, 'building_id');
     }
+
+    // public function expenses()
+    // {
+    //     return $this->hasManyThrough(
+    //         Expenses::class, // The model we want to access (Expense)
+    //         Units::class,    // The intermediate model (Unit)
+    //         'building_id',  // Foreign key on the Unit model
+    //         'unit_id',      // Foreign key on the Expense model
+    //         'id',           // Local key on the Building model
+    //         'id'            // Local key on the Unit model
+    //     );
+    // }
 }
