@@ -39,12 +39,13 @@ class ExpensesResource extends Resource
                         ->label('Vendor')
                         ->options(function (callable $get) {
                             $expenseTypeId = $get('expense_type_id');
-
                             if (!$expenseTypeId) {
                                 return Vendors::all()->pluck('name', 'id');
                             }
 
-                            return Vendors::where('expenses_type', $expenseTypeId)->pluck('name', 'id');
+                            return Vendors::whereHas('expenseTypes', function ($query) use ($expenseTypeId) {
+                                $query->where('expense_type_id', $expenseTypeId);
+                            })->pluck('name', 'id');
                         })
                         ->required(),
                 Forms\Components\DatePicker::make('date')
