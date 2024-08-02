@@ -29,7 +29,7 @@
                         <p>Total Building Area:.: &nbsp;{{ $totalArea }}</p>
                     </td>
                     <td class="w-50">
-                        <p>Report Generated Date: &nbsp;{{ date('m-d-Y', strtotime($record->generation_date)) }} </p>
+                        <p>Report Generated Date: &nbsp;{{ date('m:d:Y', strtotime($record->generation_date)) }} </p>
                         <p>Report NO:.: &nbsp;{{ $record->id }}</p>
                     </td>
                 </tr>
