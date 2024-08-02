@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\VendorsResource\Pages;
 use App\Filament\Resources\VendorsResource\RelationManagers;
 use App\Models\Vendors;
+use App\Models\ExpenseTypes;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\MultiSelect;
 
 class VendorsResource extends Resource
 {
@@ -28,8 +30,13 @@ class VendorsResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Select::make('expenses_type')
-                    ->relationship('expenseType', 'name'),
+                // Select::make('expenses_type')
+                //     ->relationship('expenseType', 'name'),
+                MultiSelect::make('expenses_type')
+                        ->relationship('expenseType', 'name')
+                        ->options(ExpenseTypes::all()->pluck('name', 'id'))
+                        ->label('Select Expenses Type')
+                        ->required(),
                 Forms\Components\TextInput::make('contact')
                     ->required()
                     ->maxLength(255),
@@ -50,9 +57,6 @@ class VendorsResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('expenseType.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('contact')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')

@@ -9,6 +9,8 @@ class Vendors extends Model
 {
     use HasFactory;
 
+    protected $table = 'vendors';
+
     protected $fillable = ['name', 'contact', 'phone', 'email', 'expenses_type'];
 
     public function expenses()
@@ -18,7 +20,9 @@ class Vendors extends Model
 
     public function expenseType()
     {
-        return $this->belongsTo(ExpenseTypes::class, 'expenses_type', 'id');
+
+        return $this->belongsToMany(ExpenseTypes::class, 'expense_types_vendors', 'vendor_id', 'expense_type_id');
+
     }
 
 }

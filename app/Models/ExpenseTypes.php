@@ -9,6 +9,8 @@ class ExpenseTypes extends Model
 {
     use HasFactory;
 
+    protected $table = 'expense_types';
+
     protected $fillable = ['name'];
 
     public function expenses()
@@ -18,6 +20,8 @@ class ExpenseTypes extends Model
 
     public function vendors()
     {
-        return $this->hasMany(Vendors::class);
+        return $this->belongsToMany(Vendors::class, 'expense_types_vendors', 'expense_type_id', 'vendor_id');
+
+
     }
 }
