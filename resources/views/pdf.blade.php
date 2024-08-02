@@ -29,7 +29,7 @@
                         <p>Total Building Area:.: &nbsp;{{ $totalArea }}</p>
                     </td>
                     <td class="w-50">
-                        <p>Report Generated Date: &nbsp;{{ date('m:d:Y', strtotime($record->generation_date)) }} </p>
+                        <p>Report Generated Date: &nbsp;{{ date('m.d.Y', strtotime($record->generation_date)) }} </p>
                         <p>Report NO:.: &nbsp;{{ $record->id }}</p>
                     </td>
                 </tr>
@@ -73,7 +73,7 @@
                             <td>{{ $exp->vendor->name }}</td>
                             <td>${{ number_format((($exp->amount/$totalArea) * $unit->area), 2 ) }}</td>
                             <td>{{ $exp->description }}</td>
-                            <td>{{ date('m:d:Y', strtotime($exp->date)) }}</td>
+                            <td>{{ date('m.d.Y', strtotime($exp->date)) }}</td>
                         </tr>
                         @php $itemNumber = ($itemNumber + 1) @endphp
                     @endforeach
