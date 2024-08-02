@@ -73,7 +73,7 @@
                             <td>{{ $exp->vendor->name }}</td>
                             <td>${{ number_format((($exp->amount/$totalArea) * $unit->area), 2 ) }}</td>
                             <td>{{ $exp->description }}</td>
-                            <td>{{ date('m-d-Y', strtotime($exp->date)) }}</td>
+                            <td>{{ date('m:d:Y', strtotime($exp->date)) }}</td>
                         </tr>
                         @php $itemNumber = ($itemNumber + 1) @endphp
                     @endforeach

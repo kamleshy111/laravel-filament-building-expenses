@@ -18,10 +18,15 @@ class Vendors extends Model
         return $this->hasMany(Expenses::class);
     }
 
-    public function expenseType()
+    public function expenseTypes()
     {
 
-        return $this->belongsToMany(ExpenseTypes::class, 'expense_types_vendors', 'vendor_id', 'expense_type_id');
+        return $this->belongsToMany(
+            ExpenseTypes::class,
+            'expense_types_vendors',
+            'vendor_id',
+            'expense_type_id'
+        );
 
     }
 

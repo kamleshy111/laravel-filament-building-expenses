@@ -32,11 +32,12 @@ class VendorsResource extends Resource
                     ->maxLength(255),
                 // Select::make('expenses_type')
                 //     ->relationship('expenseType', 'name'),
-                MultiSelect::make('expenses_type')
-                        ->relationship('expenseType', 'name')
-                        ->options(ExpenseTypes::all()->pluck('name', 'id'))
-                        ->label('Select Expenses Type')
-                        ->required(),
+                Select::make('expense_types')
+                    ->multiple()
+                    ->relationship('expenseTypes', 'name')
+                    ->label('Select Expenses Type')
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('contact')
                     ->required()
                     ->maxLength(255),
@@ -62,6 +63,11 @@ class VendorsResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('expenseTypes.name')
+                    ->label('Expense Types')
+                    ->formatStateUsing(fn($state, $record) => $record->expenseTypes->pluck('name')->implode(', '))
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
