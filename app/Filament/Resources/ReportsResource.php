@@ -44,7 +44,8 @@ class ReportsResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('generation_date')
-                    ->date('m-d-Y')
+                    ->date('d.m.Y')
+                    //->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->format('d.m.Y'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('building.name')
                     ->searchable(),

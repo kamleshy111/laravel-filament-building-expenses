@@ -40,6 +40,8 @@ class ExpensesRelationManager extends RelationManager
                     })
                     ->required(),
                 Forms\Components\DatePicker::make('date')
+                    ->native(false)
+                    ->displayFormat('d.m.Y')
                     ->required(),
                 Forms\Components\TextInput::make('amount')
                     ->required()
@@ -65,7 +67,7 @@ class ExpensesRelationManager extends RelationManager
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date')
-                    ->date()
+                    ->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->format('d.m.Y'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount')
                     ->numeric()
