@@ -20,6 +20,7 @@ use Illuminate\Validation\Rule;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+    protected static ?int $navigationSort = 10;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -31,9 +32,9 @@ class UserResource extends Resource
                             ->required(),
                 TextInput::make('email')
                             ->email()
-                            ->rules([
+                           /* ->rules([
                                 Rule::unique(User::class, 'email')
-                            ])
+                            ])*/
                             ->required(),
                 // TextInput::make('password')
                 //         ->password()
