@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -45,8 +46,14 @@ class UserResource extends Resource
                 TextInput::make('password')
                         ->password()
                         ->required(fn ($record) => $record === null)  // Only required when creating a new record
-                        ->visible(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\CreateRecord || $livewire instanceof \Filament\Resources\Pages\EditRecord) // Hide on view page
+                        ->revealable()
+                        ->visible(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\CreateRecord) // Hide on view page
                         ->dehydrateStateUsing(fn ($state) => \Hash::make($state)),
+                Select::make('roles')
+                    ->label('Roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload(),
             ]);
     }
 
