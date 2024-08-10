@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('status', ['Active', 'Terminated', 'Deactivate', 'Pending'])->default('Pending');
             $table->timestamps();
 
-            $table->foreign('tenant_id')->references('id')->on('tenant')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
         });
     }
