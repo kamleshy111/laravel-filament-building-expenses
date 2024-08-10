@@ -22,6 +22,7 @@ class ContractResource extends Resource
     protected static ?string $model = Contract::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {
@@ -86,7 +87,7 @@ class ContractResource extends Resource
                 Tables\Columns\TextColumn::make('security_deposit')->numeric(),
 
                 Tables\Columns\TextColumn::make('status'),
-                
+
             ])
             ->filters([
                 //

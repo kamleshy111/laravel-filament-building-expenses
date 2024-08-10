@@ -22,6 +22,7 @@ class TenantResource extends Resource
     protected static ?string $model = Tenants::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {
@@ -51,7 +52,7 @@ class TenantResource extends Resource
 
 
                 DatePicker::make('birthdate')
-                    ->label('Birthdate')
+                    ->label('Birth Date')
                     ->native(false)
                     ->displayFormat('d.m.Y')
                     ->required()

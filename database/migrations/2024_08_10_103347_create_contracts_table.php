@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tenant_id')->defolut(0);
-            $table->unsignedBigInteger('unit_id')->defolut(0);
+            $table->unsignedBigInteger('tenant_id')->default(0);
+            $table->unsignedBigInteger('unit_id')->default(0);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->decimal('monthly_rent', 11, 2)->defolut(0);
-            $table->decimal('security_deposit', 14, 2)->defolut(0);
-            $table->enum('status', ['Active', 'Terminated', 'Deactivate', 'Pending'])->default('Pending'); 
+            $table->decimal('monthly_rent', 11, 2)->default(0);
+            $table->decimal('security_deposit', 14, 2)->default(0);
+            $table->enum('status', ['Active', 'Terminated', 'Deactivate', 'Pending'])->default('Pending');
             $table->timestamps();
 
             $table->foreign('tenant_id')->references('id')->on('tenant')->onDelete('cascade');
